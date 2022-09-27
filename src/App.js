@@ -26,7 +26,13 @@ function formatHoursAndMinutes(min) {
   const hours = Math.floor(min / 60);
   const minutes = min % 60;
 
-  return `${hours} hours ${minutes} min`;
+  // if zero minutes and not ero hours return only hours
+  if (minutes === 0 && hours) return `${hours}h`;
+
+  // if zero hours return only zero minutes
+  if (hours === 0 && minutes) return `${minutes}m`;
+
+  return `${hours}h ${minutes}m`;
 }
 
 // app for calculation work time and earned money
@@ -148,9 +154,11 @@ function App() {
             </div>
 
             <div className="col-3">
-              <span
-                className="me-3">{formatHoursAndMinutes(slot.totalMin)}</span>
-              <span>${slot.totalCost}</span>
+              <div className="row small">
+                <div
+                  className="col-xs-12">{formatHoursAndMinutes(slot.totalMin)}</div>
+                <div className="col-xs-12">${slot.totalCost}</div>
+              </div>
             </div>
           </div>
         ))}
