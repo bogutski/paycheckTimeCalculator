@@ -106,16 +106,16 @@ function App() {
       <h4 className="mb-3">Paycheck Calculation</h4>
 
       <div className="row mb-4">
-        <div className="col-6">
+        <div className="col-8">
           <div className="input-group">
-            <span className="input-group-text">Rate per hour, $</span>
+            <span className="input-group-text">Rate, $</span>
 
             <input type="number" className="form-control" value={rate}
                    onChange={(e) => setRate(e.target.value)} />
           </div>
         </div>
 
-        <div className="col-6">
+        <div className="col-4">
           <button className="btn btn-secondary"
                   onClick={() => setSlots([])}>Reset
           </button>
