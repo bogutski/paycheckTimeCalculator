@@ -102,56 +102,75 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h4>Paycheck Calculation</h4>
+    <div className="container pt-2">
+      <h4 className="mb-3">Paycheck Calculation</h4>
 
-      <div>
-        <label>Rate per hour, $</label>
-        <input type="number" value={rate}
-               onChange={(e) => setRate(e.target.value)} />
+      <div className="row mb-4">
+        <div className="col-6">
+          <div className="input-group">
+            <span className="input-group-text">Rate per hour, $</span>
+
+            <input type="number" className="form-control" value={rate}
+                   onChange={(e) => setRate(e.target.value)} />
+          </div>
+        </div>
+
+        <div className="col-6">
+          <button className="btn btn-secondary"
+                  onClick={() => setSlots([])}>Reset
+          </button>
+        </div>
       </div>
-
-      <hr />
 
       <div>
         {slots.map((slot) => (
-          <div key={slot.id}>
-            <label>Start</label>
-            <input type="time" value={slot.start}
-                   onChange={(e) => onSlotChangeStart(slot.id, e.target.value)} />
+          <div key={slot.id}
+               className="row row-cols-lg-auto g-3 align-items-center mb-2">
 
-            <label>End</label>
-            <input type="time" value={slot.end}
-                   onChange={(e) => onSlotChangeEnd(slot.id, e.target.value)} />
+            <div className="col-4">
+              <div className="input-group">
+                <input type="time" value={slot.start} className="form-control"
+                       onChange={(e) => onSlotChangeStart(slot.id, e.target.value)} />
+              </div>
+            </div>
 
-            <button onClick={() => onRemoveSlot(slot.id)}>Remove</button>
+            <div className="col-4">
+              <div className="input-group">
+                <input type="time" value={slot.end} className="form-control"
+                       onChange={(e) => onSlotChangeEnd(slot.id, e.target.value)} />
+              </div>
+            </div>
 
+            <div className="col-1">
+              <button onClick={() => onRemoveSlot(slot.id)}
+                      className="btn btn-danger">×
+              </button>
+            </div>
 
-            <span>{slot.totalMin} min</span>
-
-            <span>${slot.totalCost}</span>
+            <div className="col-3">
+              <span
+                className="me-3">{formatHoursAndMinutes(slot.totalMin)}</span>
+              <span>${slot.totalCost}</span>
+            </div>
           </div>
         ))}
       </div>
 
+      <div className="mt-4 mb-4">
+        <button onClick={onAddSlot} className="btn btn-primary">Add slot
+        </button>
+      </div>
 
-      <button onClick={onAddSlot}>Add slot</button>
-
-      Total time and cost $
       <div>
-        {formatHoursAndMinutes(slots.reduce((acc, slot) => acc + slot.totalMin, 0))}
+        <h6>Total
+          time {formatHoursAndMinutes(slots.reduce((acc, slot) => acc + slot.totalMin, 0))}</h6>
 
-        $ {slots.reduce((acc, slot) => acc + slot.totalCost, 0)}
+        <h6>
+          ${slots.reduce((acc, slot) => acc + slot.totalCost, 0)}
+        </h6>
 
       </div>
 
-
-
-      <hr />
-
-      <pre>
-        {JSON.stringify(slots, null, 2)}
-      </pre>
     </div>
   );
 }
